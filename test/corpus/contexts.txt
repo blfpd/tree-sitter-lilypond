@@ -1,0 +1,216 @@
+================================================================================
+New and context
+================================================================================
+
+\new Staff = "up" \with { instrumentName = "Fl" } { c4 }
+\context Voice = "one" { d4 }
+\new PianoStaff << \new Staff { c } \new Staff { c } >>
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (contexted_music
+    type: (symbol)
+    name: (string
+      (string_content))
+    (with_block
+      (assignment
+        name: (identifier)
+        value: (string
+          (string_content))))
+    music: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))))
+  (contexted_music
+    type: (symbol)
+    name: (string
+      (string_content))
+    music: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))))
+  (contexted_music
+    type: (symbol)
+    music: (simultaneous_music
+      (contexted_music
+        type: (symbol)
+        music: (sequential_music
+          (note
+            pitch: (pitch))))
+      (contexted_music
+        type: (symbol)
+        music: (sequential_music
+          (note
+            pitch: (pitch)))))))
+
+================================================================================
+Context definitions
+================================================================================
+
+\layout {
+  \context {
+    \Staff
+    \consists "Ambitus_engraver"
+    \remove Clef_engraver
+    \accepts "MyVoice"
+    \name "MyStaff"
+    \override StaffSymbol.color = #red
+    fontSize = #-2
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (layout_block
+    (context_definition
+      (command)
+      (context_mod
+        value: (string
+          (string_content)))
+      (context_mod
+        value: (symbol))
+      (context_mod
+        value: (string
+          (string_content)))
+      (context_mod
+        value: (string
+          (string_content)))
+      (override
+        path: (property_path
+          (symbol)
+          (symbol))
+        value: (embedded_scheme
+          value: (scheme_symbol)))
+      (assignment
+        name: (identifier)
+        value: (embedded_scheme
+          value: (scheme_number))))))
+
+================================================================================
+Context modifications
+================================================================================
+
+\new Staff \with {
+  \omit TimeSignature
+  \clef "bass"
+  \consists \myEngraver
+  #(string-append "align" "Above" "Context") = "up"
+} { c }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (contexted_music
+    type: (symbol)
+    (with_block
+      (command)
+      (symbol)
+      (command)
+      (string
+        (string_content))
+      (context_mod
+        value: (command))
+      (assignment
+        name: (embedded_scheme
+          value: (scheme_list
+            (scheme_symbol)
+            (scheme_string
+              (string_content))
+            (scheme_string
+              (string_content))
+            (scheme_string
+              (string_content))))
+        value: (string
+          (string_content))))
+    music: (sequential_music
+      (note
+        pitch: (pitch)))))
+
+================================================================================
+Context change
+================================================================================
+
+{ \change Staff = "down" c \change Staff = up d }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (context_change
+      type: (symbol)
+      name: (string
+        (string_content)))
+    (note
+      pitch: (pitch))
+    (context_change
+      type: (symbol)
+      name: (symbol))
+    (note
+      pitch: (pitch))))
+
+================================================================================
+Override, revert, set and unset
+================================================================================
+
+{
+  \override Staff.TimeSignature.break-visibility = #all-invisible
+  \override Stem #'thickness = #2
+  \once \override NoteHead.color = #red
+  \revert Staff.Stem.color
+  \set Staff.instrumentName = \markup { Violin }
+  \set fontSize = -3
+  \unset Staff.keyAlignment
+  \override $path = #value
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (override
+      path: (property_path
+        (symbol)
+        (symbol)
+        (symbol))
+      value: (embedded_scheme
+        value: (scheme_symbol)))
+    (override
+      path: (symbol)
+      property: (embedded_scheme
+        value: (scheme_quote
+          value: (scheme_symbol)))
+      value: (embedded_scheme
+        value: (scheme_number)))
+    (command)
+    (override
+      path: (property_path
+        (symbol)
+        (symbol))
+      value: (embedded_scheme
+        value: (scheme_symbol)))
+    (revert
+      path: (property_path
+        (symbol)
+        (symbol)
+        (symbol)))
+    (set
+      path: (property_path
+        (symbol)
+        (symbol))
+      value: (markup
+        content: (markup_list
+          (word))))
+    (set
+      path: (symbol)
+      value: (number))
+    (unset
+      path: (property_path
+        (symbol)
+        (symbol)))
+    (override
+      path: (embedded_scheme
+        value: (scheme_symbol))
+      value: (embedded_scheme
+        value: (scheme_symbol)))))

@@ -1,0 +1,174 @@
+================================================================================
+Scheme values
+================================================================================
+
+#(define x 1)
+a = ##t
+b = #'(1 . 2.5)
+c = #"string\n"
+d = #\a
+e = #:key
+f = $(ly:make-moment 1/4)
+g = #`(a ,b ,@c)
+h = #-1/2
+i = #+inf.0
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (embedded_scheme
+    value: (scheme_list
+      (scheme_symbol)
+      (scheme_symbol)
+      (scheme_number)))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_boolean)))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_quote
+        value: (scheme_list
+          (scheme_number)
+          (scheme_dot)
+          (scheme_number)))))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_string
+        (string_content)
+        (escape_sequence))))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_symbol)))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_symbol)))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_list
+        (scheme_symbol)
+        (scheme_number))))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_quote
+        value: (scheme_list
+          (scheme_symbol)
+          (scheme_quote
+            value: (scheme_symbol))
+          (scheme_quote
+            value: (scheme_symbol))))))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_number)))
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_number))))
+
+================================================================================
+Scheme comments
+================================================================================
+
+#(begin
+  ; line comment
+  #| block
+     comment |#
+  #;(ignored datum)
+  (display %percent))
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (embedded_scheme
+    value: (scheme_list
+      (scheme_symbol)
+      (comment)
+      (comment)
+      (scheme_datum_comment
+        (scheme_list
+          (scheme_symbol)
+          (scheme_symbol)))
+      (scheme_list
+        (scheme_symbol)
+        (scheme_symbol)))))
+
+================================================================================
+Music function definition
+================================================================================
+
+swap = #(define-music-function (m) (ly:music?)
+  #{ \relative $m #})
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (embedded_scheme
+      value: (scheme_list
+        (scheme_symbol)
+        (scheme_list
+          (scheme_symbol))
+        (scheme_list
+          (scheme_symbol))
+        (embedded_lilypond
+          (command)
+          (embedded_scheme
+            value: (scheme_symbol)))))))
+
+================================================================================
+Embedded LilyPond
+================================================================================
+
+#(define music #{ c4 d #})
+x = #{ \with { \consists "X" } #}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (embedded_scheme
+    value: (scheme_list
+      (scheme_symbol)
+      (scheme_symbol)
+      (embedded_lilypond
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch)))))
+  (assignment
+    name: (identifier)
+    value: (embedded_lilypond
+      (with_block
+        (context_mod
+          value: (string
+            (string_content)))))))
+
+================================================================================
+Splicing
+================================================================================
+
+{ $@(list #{ c4 #} #{ d4 #}) }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (embedded_scheme
+      value: (scheme_list
+        (scheme_symbol)
+        (embedded_lilypond
+          (note
+            pitch: (pitch)
+            duration: (duration)))
+        (embedded_lilypond
+          (note
+            pitch: (pitch)
+            duration: (duration)))))))

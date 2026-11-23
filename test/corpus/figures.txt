@@ -1,0 +1,42 @@
+================================================================================
+Figured bass
+================================================================================
+
+\figures { <6 4>4 <7 5+ _!> <[6 5]> <_> <3[-]> <6\\> r2 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (figure_mode
+    music: (sequential_music
+      (figure_group
+        (figure
+          value: (number))
+        (figure
+          value: (number))
+        duration: (duration))
+      (figure_group
+        (figure
+          value: (number))
+        (figure
+          value: (number)
+          (figure_alteration))
+        (figure
+          (figure_alteration)))
+      (figure_group
+        (figure
+          value: (number))
+        (figure
+          value: (number)))
+      (figure_group
+        (figure))
+      (figure_group
+        (figure
+          value: (number)
+          (figure_alteration)))
+      (figure_group
+        (figure
+          value: (number)
+          (figure_alteration)))
+      (rest
+        duration: (duration)))))

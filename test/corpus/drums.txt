@@ -1,0 +1,31 @@
+================================================================================
+Drum mode
+================================================================================
+
+\drums { bd4 sn8 hh <bd hh>4 }
+\drummode { cymc1 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (drum_mode
+    music: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))
+      (note
+        pitch: (pitch)
+        duration: (duration))
+      (note
+        pitch: (pitch))
+      (chord
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))
+        duration: (duration))))
+  (drum_mode
+    music: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration)))))

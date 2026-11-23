@@ -1,0 +1,112 @@
+================================================================================
+Score
+================================================================================
+
+\score {
+  \new Staff { c1 }
+  \header { piece = "I" }
+  \layout { }
+  \midi { \tempo 4 = 72 }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (score_block
+    (contexted_music
+      type: (symbol)
+      music: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))))
+    (header_block
+      (assignment
+        name: (identifier)
+        value: (string
+          (string_content))))
+    (layout_block)
+    (midi_block
+      (tempo
+        duration: (duration)
+        value: (number)))))
+
+================================================================================
+Book and bookpart
+================================================================================
+
+\book {
+  \paper { #(set-paper-size "a4") }
+  \header { title = "Book" }
+  \bookpart {
+    \score { { c1 } }
+    \markup { Text }
+  }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (book_block
+    (paper_block
+      (embedded_scheme
+        value: (scheme_list
+          (scheme_symbol)
+          (scheme_string
+            (string_content)))))
+    (header_block
+      (assignment
+        name: (identifier)
+        value: (string
+          (string_content))))
+    (bookpart_block
+      (score_block
+        (sequential_music
+          (note
+            pitch: (pitch)
+            duration: (duration))))
+      (markup
+        content: (markup_list
+          (word))))))
+
+================================================================================
+Paper with expressions
+================================================================================
+
+\paper {
+  indent = 0
+  line-width = 180\mm - 2 * 15\mm
+  system-system-spacing.basic-distance = #10
+  oddHeaderMarkup = \markup \fill-line { "" }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (paper_block
+    (assignment
+      name: (identifier)
+      value: (number))
+    (assignment
+      name: (identifier)
+      value: (binary_expression
+        left: (quantity
+          (number)
+          (unit))
+        right: (binary_expression
+          left: (number)
+          right: (quantity
+            (number)
+            (unit)))))
+    (assignment
+      name: (property_path
+        (symbol)
+        (symbol))
+      value: (embedded_scheme
+        value: (scheme_number)))
+    (assignment
+      name: (identifier)
+      value: (markup
+        content: (markup_command
+          name: (command)
+          argument: (markup_list
+            (string)))))))

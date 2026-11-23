@@ -1,0 +1,184 @@
+================================================================================
+Single word and string
+================================================================================
+
+\markup hello
+\markup "Hello world"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (markup
+    content: (word))
+  (markup
+    content: (string
+      (string_content))))
+
+================================================================================
+Commands with known signatures
+================================================================================
+
+\markup \column {
+  \line { \bold Hi "there" }
+  \vspace #1
+  \fontsize #-2 \italic text
+  \fromproperty #'header:title
+  \combine \null \fermata
+  \with-color #red \box x
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (markup
+    content: (markup_command
+      name: (command)
+      argument: (markup_list
+        (markup_command
+          name: (command)
+          argument: (markup_list
+            (markup_command
+              name: (command)
+              argument: (word))
+            (string
+              (string_content))))
+        (markup_command
+          name: (command)
+          argument: (embedded_scheme
+            value: (scheme_number)))
+        (markup_command
+          name: (command)
+          argument: (embedded_scheme
+            value: (scheme_number))
+          argument: (markup_command
+            name: (command)
+            argument: (word)))
+        (markup_command
+          name: (command)
+          argument: (embedded_scheme
+            value: (scheme_quote
+              value: (scheme_symbol))))
+        (markup_command
+          name: (command)
+          argument: (markup_command
+            name: (command))
+          argument: (markup_command
+            name: (command)))
+        (markup_command
+          name: (command)
+          argument: (embedded_scheme
+            value: (scheme_symbol))
+          argument: (markup_command
+            name: (command)
+            argument: (word)))))))
+
+================================================================================
+Unknown markup commands
+================================================================================
+
+\markup { \myCommand #1 { a b } \myVariable \myOther word }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (markup
+    content: (markup_list
+      (markup_command
+        name: (command)
+        argument: (embedded_scheme
+          value: (scheme_number))
+        argument: (markup_list
+          (word)
+          (word)))
+      (markup_command
+        name: (command)
+        argument: (markup_command
+          name: (command)
+          argument: (word))))))
+
+================================================================================
+Markup in music
+================================================================================
+
+{ c^\markup { \bold x } d_\markup \italic y }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (markup
+          content: (markup_list
+            (markup_command
+              name: (command)
+              argument: (word))))))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (markup
+          content: (markup_command
+            name: (command)
+            argument: (word)))))))
+
+================================================================================
+Markup list
+================================================================================
+
+\markuplist \column-lines { \line { a } \line { b } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (markuplist
+    content: (markup_command
+      name: (command)
+      argument: (markup_list
+        (markup_command
+          name: (command)
+          argument: (markup_list
+            (word)))
+        (markup_command
+          name: (command)
+          argument: (markup_list
+            (word)))))))
+
+================================================================================
+Score in markup
+================================================================================
+
+\markup { \score { { c4 } \layout { } } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (markup
+    content: (markup_list
+      (score_block
+        (sequential_music
+          (note
+            pitch: (pitch)
+            duration: (duration)))
+        (layout_block)))))
+
+================================================================================
+Partial markup
+================================================================================
+
+\markup bold-red = \markup \bold \with-color #red \etc
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (markup
+      content: (word))
+    value: (markup
+      content: (markup_command
+        name: (command)
+        argument: (markup_command
+          name: (command)
+          argument: (embedded_scheme
+            value: (scheme_symbol))
+          argument: (etc))))))

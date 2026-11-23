@@ -1,0 +1,221 @@
+================================================================================
+Version and include
+================================================================================
+
+\version "2.24.0"
+\include "english.ly"
+\include #(string-append "my" ".ly")
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (version
+    version: (string
+      (string_content)))
+  (include
+    file: (string
+      (string_content)))
+  (include
+    file: (embedded_scheme
+      value: (scheme_list
+        (scheme_symbol)
+        (scheme_string
+          (string_content))
+        (scheme_string
+          (string_content))))))
+
+================================================================================
+Comments
+================================================================================
+
+% line comment
+%{ block
+   comment %}
+{ c4 % after a note
+  d %{ inline %} e }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (comment)
+    (note
+      pitch: (pitch))
+    (comment)
+    (note
+      pitch: (pitch))))
+
+================================================================================
+Assignments
+================================================================================
+
+melody = { c4 d e f }
+"violin I" = { g'1 }
+Staff.instrumentName = "Fl"
+number = 42
+scale = 0.5\mm
+symbol = right
+pitch = c'
+duration = \breve
+fraction = 3/4
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch))))
+  (assignment
+    name: (string
+      (string_content))
+    value: (sequential_music
+      (note
+        pitch: (pitch)
+        octave: (octave)
+        duration: (duration))))
+  (assignment
+    name: (property_path
+      (symbol)
+      (symbol))
+    value: (string
+      (string_content)))
+  (assignment
+    name: (identifier)
+    value: (number))
+  (assignment
+    name: (identifier)
+    value: (quantity
+      (number)
+      (unit)))
+  (assignment
+    name: (identifier)
+    value: (symbol))
+  (assignment
+    name: (identifier)
+    value: (note
+      pitch: (pitch)
+      octave: (octave)))
+  (assignment
+    name: (identifier)
+    value: (duration))
+  (assignment
+    name: (identifier)
+    value: (fraction)))
+
+================================================================================
+Assignment of post-events
+================================================================================
+
+accentUp = ^>
+textBelow = _"text"
+twoScripts = -"1st"-"2nd"
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (post_event
+      event: (script_abbreviation)))
+  (assignment
+    name: (identifier)
+    value: (post_event
+      event: (string
+        (string_content))))
+  (assignment
+    name: (identifier)
+    value: (post_event
+      event: (string
+        (string_content)))
+    value: (post_event
+      event: (string
+        (string_content)))))
+
+================================================================================
+Lookup in an alist
+================================================================================
+
+violin.1 = { c'1 }
+{ \violin.1 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (property_path
+      (symbol)
+      (number))
+    value: (sequential_music
+      (note
+        pitch: (pitch)
+        octave: (octave)
+        duration: (duration))))
+  (sequential_music
+    (property_path
+      (command)
+      (number))))
+
+================================================================================
+Header
+================================================================================
+
+\header {
+  title = "Title"
+  composer = \markup \bold "Me"
+  tagline = ##f
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (header_block
+    (assignment
+      name: (identifier)
+      value: (string
+        (string_content)))
+    (assignment
+      name: (identifier)
+      value: (markup
+        content: (markup_command
+          name: (command)
+          argument: (string
+            (string_content)))))
+    (assignment
+      name: (identifier)
+      value: (embedded_scheme
+        value: (scheme_boolean)))))
+
+================================================================================
+Top-level arguments of unknown functions
+================================================================================
+
+\language "english"
+\pointAndClickOff
+#(set-global-staff-size 18)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    name: (command)
+    argument: (string
+      (string_content))
+    argument: (command))
+  (embedded_scheme
+    value: (scheme_list
+      (scheme_symbol)
+      (scheme_number))))

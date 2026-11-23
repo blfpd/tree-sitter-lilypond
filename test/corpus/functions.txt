@@ -1,0 +1,157 @@
+================================================================================
+Function call as a value
+================================================================================
+
+melody = \relative c'' { c4 d e f }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (function_call
+      name: (command)
+      argument: (note
+        pitch: (pitch)
+        octave: (octave))
+      argument: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))))))
+
+================================================================================
+Nested function calls
+================================================================================
+
+music = \transpose c d \relative { c4 d }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (function_call
+      name: (command)
+      argument: (note
+        pitch: (pitch))
+      argument: (note
+        pitch: (pitch))
+      argument: (function_call
+        name: (command)
+        argument: (sequential_music
+          (note
+            pitch: (pitch)
+            duration: (duration))
+          (note
+            pitch: (pitch)))))))
+
+================================================================================
+Function call with a final command
+================================================================================
+
+global = \key d \major
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (function_call
+      name: (command)
+      argument: (note
+        pitch: (pitch))
+      argument: (command))))
+
+================================================================================
+Function call at top level
+================================================================================
+
+\relative c' { c4 }
+\new Staff \tag #'violin { c }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_call
+    name: (command)
+    argument: (note
+      pitch: (pitch)
+      octave: (octave))
+    argument: (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))))
+  (contexted_music
+    type: (symbol)
+    music: (function_call
+      name: (command)
+      argument: (embedded_scheme
+        value: (scheme_quote
+          value: (scheme_symbol)))
+      argument: (sequential_music
+        (note
+          pitch: (pitch))))))
+
+================================================================================
+Commands inside music are flat
+================================================================================
+
+{ \clef "treble" \key g \major \tuplet 3/2 { c8 d e } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (command)
+    (string
+      (string_content))
+    (command)
+    (note
+      pitch: (pitch))
+    (command)
+    (command)
+    (fraction)
+    (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration))
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch)))))
+
+================================================================================
+Function call taking a chord
+================================================================================
+
+tuning = \stringTuning <e, a, d g b e'>
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (function_call
+      name: (command)
+      argument: (chord
+        (note
+          pitch: (pitch)
+          octave: (octave))
+        (note
+          pitch: (pitch)
+          octave: (octave))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch)
+          octave: (octave))))))

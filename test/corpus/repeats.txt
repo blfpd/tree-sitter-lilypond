@@ -1,0 +1,110 @@
+================================================================================
+Repeat with alternatives
+================================================================================
+
+{ \repeat volta 2 { c4 d } \alternative { { e2 } { f2 } } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (repeat
+      type: (symbol)
+      count: (number)
+      body: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch)))
+      alternative: (alternative
+        body: (sequential_music
+          (sequential_music
+            (note
+              pitch: (pitch)
+              duration: (duration)))
+          (sequential_music
+            (note
+              pitch: (pitch)
+              duration: (duration))))))))
+
+================================================================================
+Repeat kinds
+================================================================================
+
+{ \repeat unfold 4 c8 \repeat tremolo 8 { c16 d } \repeat percent #2 { c4 } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (repeat
+      type: (symbol)
+      count: (number)
+      body: (note
+        pitch: (pitch)
+        duration: (duration)))
+    (repeat
+      type: (symbol)
+      count: (number)
+      body: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch))))
+    (repeat
+      type: (symbol)
+      count: (embedded_scheme
+        value: (scheme_number))
+      body: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))))))
+
+================================================================================
+Partial repeat
+================================================================================
+
+testPercent = \repeat percent \etc
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (assignment
+    name: (identifier)
+    value: (repeat
+      type: (symbol)
+      (etc))))
+
+================================================================================
+Tempo
+================================================================================
+
+{ \tempo "Allegro" 4. = 72-80 \tempo 4 = 120 \tempo "Andante" \tempo \markup \italic "Lento" 2 = \tempoValue }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (tempo
+      text: (string
+        (string_content))
+      duration: (duration)
+      value: (tempo_range
+        (number)
+        (number)))
+    (tempo
+      duration: (duration)
+      value: (number))
+    (tempo
+      text: (string
+        (string_content)))
+    (tempo
+      text: (markup
+        content: (markup_command
+          name: (command)
+          argument: (string
+            (string_content))))
+      duration: (duration)
+      value: (command))))

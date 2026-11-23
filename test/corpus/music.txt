@@ -1,0 +1,452 @@
+================================================================================
+Notes
+================================================================================
+
+{ c d' e,, fis'' bes,4 c-sharp8 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)
+      octave: (octave))
+    (note
+      pitch: (pitch)
+      octave: (octave))
+    (note
+      pitch: (pitch)
+      octave: (octave))
+    (note
+      pitch: (pitch)
+      octave: (octave)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration))))
+
+================================================================================
+Accidentals and octave checks
+================================================================================
+
+{ cis! des? e!? f='4 g=,8 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      accidental: (accidental))
+    (note
+      pitch: (pitch)
+      accidental: (accidental))
+    (note
+      pitch: (pitch)
+      accidental: (accidental))
+    (note
+      pitch: (pitch)
+      octave_check: (octave_check)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      octave_check: (octave_check)
+      duration: (duration))))
+
+================================================================================
+Durations
+================================================================================
+
+{ c4. d8.. e\breve f\longa*2 R1*4 s2*3/4 r4 * 2 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration
+        (multiplier
+          (number))))
+    (multi_measure_rest
+      duration: (duration
+        (multiplier
+          (number))))
+    (spacer_rest
+      duration: (duration
+        (multiplier
+          (number))))
+    (rest
+      duration: (duration
+        (multiplier
+          (number))))))
+
+================================================================================
+Rests and repetitions
+================================================================================
+
+{ r4 s8 R1 q2 c4\rest d8 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (rest
+      duration: (duration))
+    (spacer_rest
+      duration: (duration))
+    (multi_measure_rest
+      duration: (duration))
+    (chord_repetition
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (note
+      pitch: (pitch)
+      duration: (duration))))
+
+================================================================================
+Isolated durations
+================================================================================
+
+{ c4 8 8 \partial 8 }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (duration)
+    (duration)
+    (command)
+    (duration)))
+
+================================================================================
+Chords
+================================================================================
+
+{ <c e g>4 <c-1 e\3 g'!>8-> <c e>16~ q }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (chord
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch))
+      duration: (duration))
+    (chord
+      (note
+        pitch: (pitch)
+        (post_event
+          event: (fingering)))
+      (note
+        pitch: (pitch)
+        (string_number))
+      (note
+        pitch: (pitch)
+        octave: (octave)
+        accidental: (accidental))
+      duration: (duration)
+      (post_event
+        event: (script_abbreviation)))
+    (chord
+      (note
+        pitch: (pitch))
+      (note
+        pitch: (pitch))
+      duration: (duration)
+      (tie))
+    (chord_repetition)))
+
+================================================================================
+Articulations and fingerings
+================================================================================
+
+{ c-. d-> e-- f-^ g-+ a-! b-_ c^1 d_2 e-\fermata f^"text" g_\markup { x } }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (script_abbreviation)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (fingering)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (fingering)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (command)))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (string
+          (string_content))))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (markup
+          content: (markup_list
+            (word)))))))
+
+================================================================================
+Ties, slurs, beams and phrasing slurs
+================================================================================
+
+{ c8[( d]) e~ e \( f g\) a\[ b\] c^( d) }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration)
+      (beam)
+      (slur))
+    (note
+      pitch: (pitch)
+      (beam)
+      (slur))
+    (note
+      pitch: (pitch)
+      (tie))
+    (note
+      pitch: (pitch)
+      (phrasing_slur))
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)
+      (phrasing_slur))
+    (note
+      pitch: (pitch)
+      (ligature))
+    (note
+      pitch: (pitch)
+      (ligature))
+    (note
+      pitch: (pitch)
+      (post_event
+        event: (slur)))
+    (note
+      pitch: (pitch)
+      (slur))))
+
+================================================================================
+Dynamics and hairpins
+================================================================================
+
+{ c4\p\< d e f\! g\> a b\ff \! }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (command)
+    (hairpin)
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)
+      (hairpin))
+    (note
+      pitch: (pitch)
+      (hairpin))
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch))
+    (command)
+    (hairpin)))
+
+================================================================================
+Tremolos, string numbers and spanner ids
+================================================================================
+
+{ c4:32 d: e\2 f\=1( g\=1) }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch)
+      duration: (duration)
+      (tremolo))
+    (note
+      pitch: (pitch)
+      (tremolo))
+    (note
+      pitch: (pitch)
+      (string_number))
+    (note
+      pitch: (pitch)
+      (spanner_id
+        id: (number))
+      (slur))
+    (note
+      pitch: (pitch)
+      (spanner_id
+        id: (number))
+      (slur))))
+
+================================================================================
+Bar checks and voices
+================================================================================
+
+{ << { c4 d } \\ { e f } >> | c1 | }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (simultaneous_music
+      (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch)))
+      (voice_separator)
+      (sequential_music
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))))
+    (bar_check)
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (bar_check)))
+
+================================================================================
+Sequential and simultaneous keywords
+================================================================================
+
+\sequential { c d } \simultaneous { e f }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)))
+  (simultaneous_music
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch))))
+
+================================================================================
+Property paths and lists in music
+================================================================================
+
+{ \omit Staff.TimeSignature \time 2,2,3 7/8 \magnifyMusic 0.63 c }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (command)
+    (property_path
+      (symbol)
+      (symbol))
+    (command)
+    (number_list)
+    (fraction)
+    (command)
+    (number)
+    (note
+      pitch: (pitch))))
+
+================================================================================
+Shorthand commands
+================================================================================
+
+{ \*4 { c8 } c4 \~ d c\- d\^ e @c }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (command)
+    (duration)
+    (sequential_music
+      (note
+        pitch: (pitch)
+        duration: (duration)))
+    (note
+      pitch: (pitch)
+      duration: (duration))
+    (command)
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)
+      (duration_line))
+    (note
+      pitch: (pitch)
+      (bend))
+    (note
+      pitch: (pitch))
+    (command)
+    (note
+      pitch: (pitch))))

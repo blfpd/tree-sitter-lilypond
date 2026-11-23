@@ -1,0 +1,126 @@
+================================================================================
+Lyric mode
+================================================================================
+
+\lyricmode { Hel -- lo4 world __ _ "quoted"8 la~la }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (lyric_mode
+    music: (sequential_music
+      (syllable
+        text: (word))
+      (lyric_hyphen)
+      (syllable
+        text: (word)
+        duration: (duration))
+      (syllable
+        text: (word))
+      (lyric_extender)
+      (syllable
+        text: (word))
+      (syllable
+        text: (string
+          (string_content))
+        duration: (duration))
+      (syllable
+        text: (word)))))
+
+================================================================================
+Lyrics attached to a voice
+================================================================================
+
+<<
+  \new Voice = "melody" { c4 d e }
+  \new Lyrics \lyricsto "melody" { \set stanza = "1." do re mi }
+>>
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (simultaneous_music
+    (contexted_music
+      type: (symbol)
+      name: (string
+        (string_content))
+      music: (sequential_music
+        (note
+          pitch: (pitch)
+          duration: (duration))
+        (note
+          pitch: (pitch))
+        (note
+          pitch: (pitch))))
+    (contexted_music
+      type: (symbol)
+      music: (lyrics_to
+        context: (string
+          (string_content))
+        lyrics: (sequential_music
+          (set
+            path: (symbol)
+            value: (string
+              (string_content)))
+          (syllable
+            text: (word))
+          (syllable
+            text: (word))
+          (syllable
+            text: (word)))))))
+
+================================================================================
+Add lyrics
+================================================================================
+
+{ c d e } \addlyrics { do re mi } \addlyrics \with { alignAboveContext = "x" } \verseTwo
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (sequential_music
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch))
+    (note
+      pitch: (pitch)))
+  (add_lyrics
+    lyrics: (sequential_music
+      (syllable
+        text: (word))
+      (syllable
+        text: (word))
+      (syllable
+        text: (word))))
+  (add_lyrics
+    (with_block
+      (assignment
+        name: (identifier)
+        value: (string
+          (string_content))))
+    lyrics: (command)))
+
+================================================================================
+Lyrics with repeats and markup
+================================================================================
+
+\lyrics { \repeat unfold 2 { la la } \markup \italic ah }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (lyric_mode
+    music: (sequential_music
+      (repeat
+        type: (symbol)
+        count: (number)
+        body: (sequential_music
+          (syllable
+            text: (word))
+          (syllable
+            text: (word))))
+      (markup
+        content: (markup_command
+          name: (command)
+          argument: (word))))))

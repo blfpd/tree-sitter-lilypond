@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - queries/**
+      - bindings/**
+      - examples/**
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - queries/**
+      - bindings/**
+      - examples/**
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test parser
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+      - name: Run parser and binding tests
+        uses: tree-sitter/parser-test-action@v3
+        with:
+          generate: ${{runner.os == 'Linux'}}
+          test-rust: true
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v5
+        with:
+          files: examples/**
+
+  corpus:
+    name: Parse LilyPond's test suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Parse the regression tests, snippets and init files
+        run: node scripts/parse-corpus.js
+
+  fuzz:
+    name: Fuzz scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Check for scanner changes
+        id: scanner-check
+        run: |-
+          if git diff --quiet HEAD^ -- src/scanner.c src/markup_commands.h; then
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'changed=true\n' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run the fuzzer
+        uses: tree-sitter/fuzz-action@v4
+        if: steps.scanner-check.outputs.changed == 'true'
